@@ -1,4 +1,4 @@
-#Text Data Preprocessing Lib
+#Biblioteca de preprocesamiento de datos de texto
 import nltk
 
 from nltk.stem import PorterStemmer
@@ -15,7 +15,7 @@ ignore_words = ['?', '!',',','.', "'s", "'m"]
 train_data_file = open('intents.json').read()
 intents = json.loads(train_data_file)
 
-# function for appending stem words
+# Función para añadir palabras raíz (stem words)
 def get_stem_words(words, ignore_words):
     stem_words = []
     for word in words:
@@ -26,12 +26,12 @@ def get_stem_words(words, ignore_words):
 
 for intent in intents['intents']:
     
-        # Add all words of patterns to list
+        # Agregar todas las palabras de los patrones a una lista
         for pattern in intent['patterns']:            
             pattern_word = nltk.word_tokenize(pattern)            
             words.extend(pattern_word)                      
             word_tags_list.append((pattern_word, intent['tag']))
-        # Add all tags to the classes list
+        # Agregar todas las etiquetas a la lista de clases
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
             stem_words = get_stem_words(words, ignore_words)
@@ -40,7 +40,7 @@ print(stem_words)
 print(word_tags_list[0]) 
 print(classes)   
 
-#Create word corpus for chatbot
+# Crear un corpus de palabras para el chatbot
 def create_bot_corpus(stem_words, classes):
 
     stem_words = sorted(list(set(stem_words)))
